@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+    {{ tag.title }} - {{ block.super }}
+
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="mb-5">Посты с тэгом "{{ tag.title|title }}"</h1>
+
+    {% for post in tag.posts.all %}
+
+        {% include 'blog/includes/post_card_template.html' %}
+
+    {% endfor %}
+
+{% endblock %}
