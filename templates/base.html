@@ -24,7 +24,15 @@
           <li><a href="{% url 'base_index_url' %}" class="nav-link px-2 link-secondary">Главная</a></li>
           <li><a href="{% url 'post_list_url' %}" class="nav-link px-2">Блог</a></li>
           <li><a href="{% url 'tags_list_url' %}" class="nav-link px-2">Тэги</a></li>
+          {% if request.resolver_match.url_name == 'post_list_url' %}
+              <li><a href="{% url 'post_create_url' %}" class="nav-link px-2">Создать пост</a></li>
+          {% endif %}
+          {% if request.resolver_match.url_name == 'tags_list_url' %}
+              <li><a href="{% url 'tag_create_url' %}" class="nav-link px-2">Создать тэг</a></li>
+          {% endif %}
       </ul>
+
+
 
       <div class="col-md-3 text-end">
         <button type="button" class="btn btn-outline-primary me-2">Зарегистрироваться</button>
