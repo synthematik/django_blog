@@ -4,6 +4,23 @@
 Блог - {{ block.super }}
 {% endblock %}
 
+{% block admin-panel %}
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        Создать
+      </button>
+      <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 'post_create_url' %}">Пост</a></li>
+          <li><a class="dropdown-item" href="{% url 'tag_create_url' %}">Тэг</a></li>
+      </ul>
+    </div>
+
+    <a href="{{ admin_obj.get_update_url }}" class="btn btn-primary edit" style="{% if detail %}display: block;{% endif %}">Редактировать</a>
+    <a href="{{ admin_obj.get_delete_url }}" class="btn btn-danger delete" style="{% if detail %}display: block;{% endif %}">Удалить</a>
+
+{% endblock %}
+
 {% block body %}
 
     <h1 class="mb-5">Посты:</h1>
