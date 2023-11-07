@@ -5,15 +5,15 @@ from django.urls import reverse
 class ObjectDetailMixin:
     model = None
     template = None
+
     def get(self, request, slug):
         obj = get_object_or_404(self.model, slug__iexact=slug)
-        return render(request, self.template, context={self.model.__name__.lower(): obj})
+        return render(request, self.template, context={self.model.__name__.lower(): obj, 'admin_obj': obj, 'detail': True})
 
 
 class ObjectCreateMixin:
     form_model = None
     template = None
-
 
     def get(self, request):
         form = self.form_model()
