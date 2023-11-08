@@ -5,11 +5,36 @@ from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, Obje
 from .forms import TagForm, PostForm
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 
 def posts_list(request):
     posts = Post.objects.all()
-    return render(request,'blog/base_blog.html', context={'posts':posts})
+
+    paginator = Paginator(posts,2)
+    page_num = request.GET.get('page', 1)
+    page = paginator.get_page(page_num)
+
+    is_pag = page.has_other_pages()
+
+    if page.has_previous():
+        prev_url = f'?page={page.previous_page_number()}'
+    else:
+        prev_url = ''
+
+    if page.has_next():
+        next_url = f'?page={page.next_page_number()}'
+    else:
+        next_url = ''
+
+    context = {
+        'posts': page,
+        'is_pag': is_pag,
+        'prev_url': prev_url,
+        'next_url': next_url
+    }
+
+    return render(request,'blog/base_blog.html', context=context)
 
 
 def tags_list(request):
