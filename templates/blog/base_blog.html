@@ -24,7 +24,7 @@
 {% block body %}
 
     <h1 class="mb-5">Посты:</h1>
-    {% for post in posts %}
+    {% for post in posts.object_list %}
 
         {% include 'blog/includes/post_card_template.html' %}
 
