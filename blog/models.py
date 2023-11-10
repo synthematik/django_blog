@@ -12,6 +12,9 @@ def gen_slug(s: str) -> str:
 
 
 class Post(models.Model):
+    """
+    Данные о постах
+    """
     title = models.CharField(max_length=150, db_index=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
     body = models.TextField(blank=True, db_index=True)
@@ -34,7 +37,7 @@ class Post(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return (self.title)
+        return f"{self.title}, {self.date_pub}"
 
     class Meta:
         ordering = ['-date_pub'] # Порядок сортировки
@@ -60,3 +63,16 @@ class Tag(models.Model):
         ordering = ['title'] # Порядок сортировки
 
 
+class Comment(models.Model):
+    """
+    Комментарии пользователей под постами
+    """
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    comment_text = models.TextField()
+    date_comment_pub = models.DateTimeField(auto_now_add=True)
+
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name}, {self.comment_text}, {self.date_comment_pub}, {self.post}"
