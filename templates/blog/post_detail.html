@@ -6,11 +6,18 @@
 
 {% block body %}
 
-    <h1 class="mt-5">
-        {{ post.title }}
-    </h1>
-    <p>
-        {{ post.body }}
-    </p>
+    <div class="container mt-5" style="height: 150px">
+        <article class="card mb-4">
+            <div class="card-body">
+                <h1 class="card-title">{{ post.title }}</h1>
+                <p class="card-text">{{ post.body | linebreaks }}</p>
+            </div>
+        </article>
+
+        <section class="comments-section">
+            <h2 class="mt-4 mb-3">Комментарии</h2>
+            {% include 'blog/includes/comment_card_template.html' %}
+        </section>
+    </div>
 
 {% endblock %}
