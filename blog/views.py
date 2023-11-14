@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
-from .models import Post, Tag
+from .models import Post, Tag, Comment
 from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
-from .forms import TagForm, PostForm
+from .forms import TagForm, PostForm, CommentForm
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -95,3 +95,18 @@ class PostDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     template = 'blog/post_delete_form.html'
     redirect_url = 'post_list_url'
     raise_exception = True
+
+
+class CommentCreate(View):
+    form_model = CommentForm
+    template = 'blog/includes/comment_card_template.html'
+    def post(self, request, slug):
+        post = get_object_or_404(Post, slug=slug)
+        bound_form = self.form_model(request.POST)
+
+        if bound_form.is_valid():
+            new_comment = bound_form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+
+        return redirect('post_detail_url', slug=slug)
