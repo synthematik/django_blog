@@ -19,29 +19,33 @@
 <body>
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2 mb-4 border-bottom">
-      <div class="col-md-3 mb-2 mb-md-0">
-        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-        </a>
-      </div>
-
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{% url 'base_index_url' %}" class="nav-link px-2 link-secondary">Главная</a></li>
-          <li><a href="{% url 'post_list_url' %}" class="nav-link px-2">Блог</a></li>
-          <li><a href="{% url 'tags_list_url' %}" class="nav-link px-2">Тэги</a></li>
-          {% if request.resolver_match.url_name == 'post_list_url' %}
-              <li><a href="{% url 'post_create_url' %}" class="nav-link px-2">Создать пост</a></li>
-          {% endif %}
-          {% if request.resolver_match.url_name == 'tags_list_url' %}
-              <li><a href="{% url 'tag_create_url' %}" class="nav-link px-2">Создать тэг</a></li>
-          {% endif %}
-      </ul>
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none"></a>
+        </div>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 
 
 
-      <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Зарегистрироваться</button>
-        <button type="button" class="btn btn-primary">Войти</button>
-      </div>
+            <li><a href="{% url 'base_index_url' %}" class="nav-link px-2 link-secondary">Главная</a></li>
+            <li><a href="{% url 'post_list_url' %}" class="nav-link px-2">Блог</a></li>
+            <li><a href="{% url 'tags_list_url' %}" class="nav-link px-2">Тэги</a></li>
+            {% if request.resolver_match.url_name == 'post_list_url' %}
+                <li><a href="{% url 'post_create_url' %}" class="nav-link px-2">Создать пост</a></li>
+            {% endif %}
+            {% if request.resolver_match.url_name == 'tags_list_url' %}
+                <li><a href="{% url 'tag_create_url' %}" class="nav-link px-2">Создать тэг</a></li>
+            {% endif %}
+        </ul>
+        <form class="d-flex" role="search" action="{% url 'post_list_url' %}">
+            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
+            <button class="btn btn-outline-success" type="submit">Найти</button>
+        </form>
+
+
+        <div class="col-md-3 text-end">
+            <button type="button" class="btn btn-outline-primary me-2">Зарегистрироваться</button>
+            <button type="button" class="btn btn-primary">Войти</button>
+        </div>
     </header>
 </div>
 <div class="container mt-5">
