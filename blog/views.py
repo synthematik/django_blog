@@ -1,9 +1,10 @@
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
-from .models import Post, Tag, Comment
+from .models import Post, Tag
 from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
-from .forms import TagForm, PostForm, CommentForm
-from django.urls import reverse
+from .forms import TagForm, PostForm, CommentForm, RegistrationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -16,7 +17,7 @@ def posts_list(request):
     else:
         posts = Post.objects.all()
 
-    paginator = Paginator(posts,2)
+    paginator = Paginator(posts, 2)
     page_num = request.GET.get('page', 1)
     page = paginator.get_page(page_num)
 
@@ -39,7 +40,7 @@ def posts_list(request):
         'next_url': next_url
     }
 
-    return render(request,'blog/base_blog.html', context=context)
+    return render(request, 'blog/base_blog.html', context=context)
 
 
 def tags_list(request):
@@ -105,6 +106,7 @@ class PostDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
 class CommentCreate(View):
     form_model = CommentForm
     template = 'blog/includes/comment_card_template.html'
+
     def post(self, request, slug):
         post = get_object_or_404(Post, slug=slug)
         bound_form = self.form_model(request.POST)
@@ -115,3 +117,26 @@ class CommentCreate(View):
             new_comment.save()
 
         return redirect('post_detail_url', slug=slug)
+
+
+@login_required()
+def profile_view(request):
+    return render(request, 'blog/profile_user.html')
+
+
+def register_view(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            password = form.cleaned_data['password1']
+            user.set_password(password)
+            user.save()
+
+            user = authenticate(username=user.username, password=password)
+            if user:
+                login(request, user)
+                return redirect('profile_url')
+    else:
+        form = RegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})
