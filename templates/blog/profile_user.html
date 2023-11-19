@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Профиль пользователя
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="profile-container container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="mb-4">Профиль</h2>
+
+                <div class="profile-card card">
+                    <div class=" profile-card-body card-body">
+                        <h5 class="card-title">Информация о пользователе</h5>
+                        <p class="card-text"><strong>Имя:</strong> {{ user.username }}</p>
+                        <p class="card-text"><strong>Почта:</strong> {{ user.email }}</p>
+
+                        <a href="#" class="profile-primary btn btn-primary">Редактировать профиль</a>
+                        <button class="profile-danger btn btn-danger" onclick="location.href='{% url 'logout' %}?next=/blog/profile'">Выйти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
