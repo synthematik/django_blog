@@ -20,3 +20,23 @@
 a.edit, a.delete {
     display: None;
 }
+
+.profile-container {
+    margin-top: 20px;
+}
+
+.profile-card {
+    margin-top: 20px;
+}
+
+.profile-card-body {
+    text-align: center;
+}
+
+.profile-primary {
+    margin-right: 10px;
+}
+
+.profile-danger {
+    margin-top: 10px;
+}
