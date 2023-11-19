@@ -8,7 +8,7 @@
     <div class="card-footer text-muted">
         <small>{{ post.date_pub|date:"F d, Y" }}</small>
         <div class="mt-2">
-            <strong>Тэги:</strong>
+            <strong>Категория:</strong>
             {% for tag in post.tags.all %}
                 <a href="{{ tag.get_absolute_url }}" class="btn btn-info">{{ tag.title }}</a>
             {% endfor %}
