@@ -27,7 +27,7 @@
 
 
             <li><a href="{% url 'base_index_url' %}" class="nav-link px-2 link-secondary">Главная</a></li>
-            <li><a href="{% url 'post_list_url' %}" class="nav-link px-2">Блог</a></li>
+            <li><a href="{% url 'post_list_url' %}" class="nav-link px-2">Лента</a></li>
 
             {% if request.resolver_match.url_name == 'post_list_url' and user.is_authenticated%}
                 <li><a href="{% url 'tags_list_url' %}" class="nav-link px-2">Категории</a></li>
@@ -39,13 +39,18 @@
         </ul>
         <form class="d-flex" role="search" action="{% url 'post_list_url' %}">
             <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
-            <button class="btn btn-outline-success" type="submit">Найти</button>
+            <button class="btn btn-outline-primary" type="submit">Найти</button>
         </form>
 
 
         <div class="col-md-3 text-end">
             {% if user.is_authenticated %}
-                <a href="{% url 'profile_url' %}" class="btn btn-outline-primary me-2">Профиль</a>
+                <a href="{% url 'profile_url' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
+                </a>
             {% else %}
                 <a href="{% url 'register_url' %}" class="btn btn-outline-primary me-2">Зарегистрироваться</a>
                 <a href="{% url 'login' %}" class="btn btn-primary">Войти</a>

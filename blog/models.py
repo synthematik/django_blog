@@ -3,6 +3,7 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 from time import time
 
+
 def gen_slug(s: str) -> str:
     """
     Функция для генерации слага
@@ -15,12 +16,12 @@ class Post(models.Model):
     """
     Данные о постах
     """
-    title = models.CharField(max_length=150, db_index=True)
+    title = models.CharField('Заголовок', max_length=150, db_index=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
-    body = models.TextField(blank=True, db_index=True)
+    body = models.TextField('Текст', blank=True, db_index=True)
     date_pub = models.DateTimeField(auto_now_add=True)
 
-    tags = models.ManyToManyField('Tag', blank=True, related_name='posts') #relationship
+    tags = models.ManyToManyField('Tag', blank=True, related_name='posts')  # relationship
 
     def get_absolute_url(self):
         return reverse('post_detail_url', kwargs={'slug': self.slug})
@@ -40,7 +41,7 @@ class Post(models.Model):
         return f"{self.title}, {self.date_pub}"
 
     class Meta:
-        ordering = ['-date_pub'] # Порядок сортировки
+        ordering = ['-date_pub']  # Порядок сортировки
 
 
 class Tag(models.Model):
@@ -51,7 +52,7 @@ class Tag(models.Model):
         return reverse('tag_detail_url', kwargs={'slug': self.slug})
 
     def get_update_url(self):
-        return reverse('tag_update_url', kwargs={'slug':self.slug})
+        return reverse('tag_update_url', kwargs={'slug': self.slug})
 
     def get_delete_url(self):
         return reverse('tag_delete_url', kwargs={'slug': self.slug})
@@ -60,7 +61,7 @@ class Tag(models.Model):
         return (self.title)
 
     class Meta:
-        ordering = ['title'] # Порядок сортировки
+        ordering = ['title']  # Порядок сортировки
 
 
 class Comment(models.Model):

@@ -103,9 +103,10 @@ class PostDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     raise_exception = True
 
 
-class CommentCreate(View):
+class CommentCreate(LoginRequiredMixin, View):
     form_model = CommentForm
     template = 'blog/includes/comment_card_template.html'
+    raise_exception = True
 
     def post(self, request, slug):
         post = get_object_or_404(Post, slug=slug)
