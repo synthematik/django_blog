@@ -1,10 +1,8 @@
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 from .models import Post, Tag
 from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
-from .forms import TagForm, PostForm, CommentForm, RegistrationForm
+from .forms import TagForm, PostForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -118,26 +116,3 @@ class CommentCreate(LoginRequiredMixin, View):
             new_comment.save()
 
         return redirect('post_detail_url', slug=slug)
-
-
-@login_required()
-def profile_view(request):
-    return render(request, 'blog/profile_user.html')
-
-
-def register_view(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            password = form.cleaned_data['password1']
-            user.set_password(password)
-            user.save()
-
-            user = authenticate(username=user.username, password=password)
-            if user:
-                login(request, user)
-                return redirect('profile_url')
-    else:
-        form = RegistrationForm()
-    return render(request, 'registration/register.html', {'form': form})
