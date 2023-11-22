@@ -17,8 +17,8 @@
                             {% csrf_token %}
                             {{ form.as_p }}
                             <button type="submit" class="btn btn-primary mb-2">Зарегистрироваться</button>
-                            <a href="{% url 'login' %}"><button type="submit" class="btn btn-info">Уже есть профиль?</button></a>
                         </form>
+                        <a href="{% url 'login' %}"><button type="submit" class="btn btn-info">Уже есть профиль?</button></a>
                     </div>
                 </div>
             </div>
