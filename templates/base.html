@@ -28,9 +28,10 @@
 
             <li><a href="{% url 'base_index_url' %}" class="nav-link px-2 link-secondary">Главная</a></li>
             <li><a href="{% url 'post_list_url' %}" class="nav-link px-2">Лента</a></li>
+            <li><a href="{% url 'tags_list_url' %}" class="nav-link px-2">Категории</a></li>
 
             {% if request.resolver_match.url_name == 'post_list_url' and user.is_authenticated%}
-                <li><a href="{% url 'tags_list_url' %}" class="nav-link px-2">Категории</a></li>
+                
                 <li><a href="{% url 'post_create_url' %}" class="nav-link px-2">Создать пост</a></li>
             {% endif %}
             {% if request.resolver_match.url_name == 'tags_list_url' %}
